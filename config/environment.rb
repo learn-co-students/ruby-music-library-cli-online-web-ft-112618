@@ -1,7 +1,7 @@
 require 'bundler'
+require 'pry'
 Bundler.require
-
-module Concerns
+ module Concerns
 end
-
-require_all 'lib'
+ require_all 'lib'
+ #binding.pry
