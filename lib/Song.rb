@@ -48,6 +48,12 @@ class Song
     self.find_by_name(name) || self.create(name)
   end
 
+  def self.new_from_filename(file)
+    binding.pry
+    self.new(file.slice(/-.*-/).slice(/\b.*\b/))
+    Artist.find_or_create_by_name(file.slice(/^[\w\s]*/).slice(/[\s\w]*\b/))
+  end
+
 
 
 # binding.pry
