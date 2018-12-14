@@ -49,8 +49,8 @@ class Song
   end
 
   def self.new_from_filename(file)
-    binding.pry
-    song = self.new(file.slice(/-.*-\s/).slice(/\b.*\w\b/))
+    # binding.pry
+    song = self.new(file.slice(/-.*-\s/).slice(/\b[\w\s']+\b/))
     song.artist = Artist.find_or_create_by_name(file.slice(/^[\w\s]*/).slice(/[\s\w]*\b/))
     song.genre = Genre.find_or_create_by_name(file.slice(/\b\w+[\s-]?\w*.mp3$/).slice(/^[\w\s-]+/))
     song

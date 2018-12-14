@@ -20,22 +20,15 @@ class MusicLibraryController
       when "list songs"
         self.list_songs
       when "list artists"
-        Artist.all.each.with_index(1) {|artist, i| puts "#{i}. #{artist.name}"}
+        self.list_artists
       when "list genres"
-        Genre.all.each.with_index(1) {|genre, i| puts "#{i}. #{genre.name}"}
+        self.list_genres
       when "list artist"
-        print "Enter the name of the artist: "
-        input2 = gets.chomp
-        puts "The artist's songs are:"
-        artist = Artist.find_or_create_by_name(input2)
-        artist.songs.each.with_index(1) {|song, i| puts "\t#{i}. #{song.name}"}
+        self.list_songs_by_artist
       when "list genre"
-        print "Enter the name of the genre: "
-        input2 = gets.chomp
-        puts "The songs within that genre are:"
-        genre = Genre.find_or_create_by_name(input2)
-        genre.songs.each.with_index(1) {|song, i| puts "\t#{i}. #{song.name}"}
+        self.list_songs_by_genre
       when "play song"
+        self.play_song
       when "exit"
         break
       end
@@ -43,8 +36,37 @@ class MusicLibraryController
   end
 
   def list_songs
-    # binding.pry
     Song.all.sort {|a, b| a.name <=> b.name }.each.with_index(1) {|song, i| puts "#{i}. #{song.artist.name} - #{song.name} - #{song.genre.name}" }
+  end
+
+  def list_artists
+    Artist.all.sort {|a, b| a.name <=> b.name }.each.with_index(1) {|artist, i| puts "#{i}. #{artist.name}"}
+  end
+
+  def list_genres
+    Genre.all.sort {|a, b| a.name <=> b.name }.each.with_index(1) {|genre, i| puts "#{i}. #{genre.name}"}
+  end
+
+  def list_songs_by_artist
+    puts "Please enter the name of an artist:"
+    input2 = gets.chomp
+    artist = Artist.find_or_create_by_name(input2)
+    artist.songs.sort {|a, b| a.name <=> b.name }.each.with_index(1) {|song, i| puts "#{i}. #{song.name} - #{song.genre.name}"}
+  end
+
+  def list_songs_by_genre
+    puts "Please enter the name of a genre:"
+    input2 = gets.chomp
+    genre = Genre.find_or_create_by_name(input2)
+    genre.songs.sort {|a, b| a.name <=> b.name }.each.with_index(1) {|song, i| puts "#{i}. #{song.artist.name} - #{song.name}"}
+  end
+
+  def play_song
+    puts "Which song number would you like to play?"
+    input2 = gets.chomp
+    song = Song.all.sort {|a, b| a.name <=> b.name }[input2.to_i - 1]
+    y = Song.all.sort {|a, b| a.name <=> b.name }.size
+    puts "Playing #{song.name} by #{song.artist.name}" if (1..y).include?(input2.to_i)
   end
 
 end
