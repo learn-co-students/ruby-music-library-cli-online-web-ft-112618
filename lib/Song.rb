@@ -50,8 +50,16 @@ class Song
 
   def self.new_from_filename(file)
     binding.pry
-    self.new(file.slice(/-.*-/).slice(/\b.*\b/))
-    Artist.find_or_create_by_name(file.slice(/^[\w\s]*/).slice(/[\s\w]*\b/))
+    song = self.new(file.slice(/-.*-\s/).slice(/\b.*\w\b/))
+    song.artist = Artist.find_or_create_by_name(file.slice(/^[\w\s]*/).slice(/[\s\w]*\b/))
+    song.genre = Genre.find_or_create_by_name(file.slice(/\b\w+[\s-]?\w*.mp3$/).slice(/^[\w\s-]+/))
+    song
+  end
+
+  def self.create_from_filename(file)
+    song = self.new_from_filename(file)
+    song.save
+    song
   end
 
 
