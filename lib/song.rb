@@ -7,6 +7,7 @@ class Song
 
   def initialize(name, artist = nil, genre = nil)
     @name = name
+    #ßbinding.pry
     self.artist = artist if artist
     self.genre = genre if genre
   end
@@ -37,7 +38,7 @@ class Song
 
       @artist = artist
       artist.add_song(self) unless artist.songs.include?(self)
-      #artist.songs << self unless artist.songs.include?(self)
+      
   end
 
   def genre=(genre)
