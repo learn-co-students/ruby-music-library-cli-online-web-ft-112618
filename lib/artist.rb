@@ -1,5 +1,5 @@
 class Artist
-  extend Concerns::Findable
+  extend Concerns::Findable, Concerns::Editable
   attr_accessor :name, :genre, :song
   @@all = []
 
@@ -14,10 +14,6 @@ class Artist
 
   def self.all
     @@all
-  end
-
-  def self.destroy_all
-    @@all.clear
   end
 
   def self.create(name)

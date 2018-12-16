@@ -1,10 +1,9 @@
 class Genre
-  extend Concerns::Findable
+  extend Concerns::Findable, Concerns::Editable
   attr_accessor :name, :song, :artist
   @@all = []
 
-  def initialize(name
-  )
+  def initialize(name)
     @name = name
     @songs = []
   end
@@ -15,10 +14,6 @@ class Genre
 
   def self.all
     @@all
-  end
-
-  def self.destroy_all
-    @@all.clear
   end
 
   def self.create(name)

@@ -1,5 +1,7 @@
 class Song
-  attr_accessor :name, :genre, :artist
+  extend Concerns::Findable, Concerns::Editable
+  attr_accessor :name
+  attr_reader :genre, :artist
   @@all = []
 
   def initialize(name, artist = nil, genre = nil)
@@ -17,10 +19,6 @@ class Song
     @@all
   end
 
-  def self.destroy_all
-    @@all.clear
-  end
-
   def self.create(name)
     song = Song.new(name)
     song.save
@@ -36,21 +34,6 @@ class Song
     @genre = genre
     genre.songs << self
     genre.songs.uniq!
-  end
-
-  def self.find_by_name(name)
-    @@all.find do |song|
-      song.name == name
-    end
-  end
-
-  def self.find_or_create_by_name(name)
-    if find_by_name(name)
-      find_by_name(name)
-      #binding.pry
-    else
-      create(name)
-    end
   end
 
   def self.new_from_filename(file)
