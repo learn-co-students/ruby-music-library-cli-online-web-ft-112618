@@ -4,6 +4,8 @@ class Artist
 
   @@all = []
 
+  extend Concerns::Findable
+
     def initialize(name)
       @name = name
       @songs = []
@@ -27,11 +29,19 @@ class Artist
       created_artist
     end
 
-    def add_song(artist_name)
-     # @@artists << song
-     # @songs << song
-     Artist.create(artist_name)
-     song.artist = self
+    def add_song(song)
+      if song.artist.nil?
+        song.artist = self
+      end
+      @songs << song unless @songs.include?(song)
+    end
+
+    def genres
+     genres_all = []
+     @songs.each do |song|
+         genres_all << song.genre unless genres_all.include?(song.genre)
+      end
+      genres_all
     end
 
 end
